@@ -1,0 +1,37 @@
+---
+import type { Language } from '../types/i18n';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: Language;
+}
+
+const { 
+  title = 'Salut Annecy - Guide Local Complet', 
+  description = 'Découvrez Annecy avec notre guide local complet',
+  lang = 'fr'
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  </head>
+  <body class="flex flex-col min-h-screen">
+    <Header client:load currentLang={lang} />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer currentLang={lang} />
+  </body>
+</html>

@@ -1,0 +1,132 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getTranslation } from '../i18n';
+
+const lang = 'fr';
+const t = getTranslation(lang);
+---
+
+<Layout title={t.home.title} lang={lang}>
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-primary-500 to-primary-700 text-white py-20">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">{t.home.title}</h1>
+        <p class="text-xl md:text-2xl mb-8">{t.home.subtitle}</p>
+        
+        <!-- Search Bar -->
+        <div class="bg-white rounded-lg shadow-xl p-2">
+          <div class="flex flex-col md:flex-row gap-2">
+            <input
+              type="text"
+              placeholder={t.home.searchPlaceholder}
+              class="flex-1 px-4 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-500"
+            />
+            <button class="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-md font-semibold transition">
+              Rechercher
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">Explorer par catégorie</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        {Object.entries(t.categories).map(([key, value]) => (
+          <a
+            href={`/explore?category=${key}`}
+            class="bg-white rounded-lg shadow-md hover:shadow-xl transition p-6 text-center"
+          >
+            <div class="text-4xl mb-3">
+              {key === 'restaurants' && '🍽️'}
+              {key === 'accommodation' && '🏨'}
+              {key === 'activities' && '🎯'}
+              {key === 'shops' && '🛍️'}
+              {key === 'culture' && '🎭'}
+              {key === 'nature' && '🌲'}
+              {key === 'health' && '🏥'}
+              {key === 'education' && '🎓'}
+              {key === 'transport' && '🚇'}
+              {key === 'services' && '🔧'}
+            </div>
+            <h3 class="font-semibold text-gray-900">{value}</h3>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Places Section -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-8">{t.home.featuredPlaces}</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Sample featured places - will be dynamic with real data */}
+        {[1, 2, 3].map((i) => (
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+            <div class="h-48 bg-gradient-to-r from-primary-400 to-primary-600"></div>
+            <div class="p-6">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm text-gray-500">Restaurant</span>
+                <div class="flex items-center">
+                  <span class="text-yellow-400">★</span>
+                  <span class="ml-1 text-sm font-semibold">4.5</span>
+                </div>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Restaurant {i}</h3>
+              <p class="text-gray-600 mb-4">Une expérience culinaire exceptionnelle au cœur d'Annecy.</p>
+              <a href={`/place/${i}`} class="text-primary-600 hover:text-primary-700 font-semibold">
+                En savoir plus →
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Upcoming Events Section -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-8">{t.home.upcomingEvents}</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {[1, 2, 3].map((i) => (
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+            <div class="h-48 bg-gradient-to-r from-purple-400 to-pink-600"></div>
+            <div class="p-6">
+              <div class="flex items-center mb-2">
+                <span class="text-sm text-gray-500">Festival</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Événement {i}</h3>
+              <p class="text-gray-600 mb-2">15 Mars 2026</p>
+              <p class="text-gray-600 mb-4">Centre-ville, Annecy</p>
+              <a href={`/event/${i}`} class="text-primary-600 hover:text-primary-700 font-semibold">
+                Plus d'infos →
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="py-16 bg-primary-600 text-white">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-4">Rejoignez la communauté</h2>
+      <p class="text-xl mb-8">Partagez vos découvertes et connectez-vous avec d'autres passionnés d'Annecy</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/community" class="bg-white text-primary-600 px-8 py-3 rounded-md font-semibold hover:bg-gray-100 transition">
+          Rejoindre
+        </a>
+        <a href="/professional" class="border-2 border-white text-white px-8 py-3 rounded-md font-semibold hover:bg-white hover:text-primary-600 transition">
+          Espace Professionnel
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

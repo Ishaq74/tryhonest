@@ -1,0 +1,217 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getTranslation } from '../i18n';
+
+const lang = 'fr';
+const t = getTranslation(lang);
+
+// Mock data - will be replaced with real database queries
+const mockPlaces = [
+  {
+    id: '1',
+    name: 'Le Chalet du Lac',
+    category: 'restaurant',
+    description: 'Restaurant traditionnel avec vue sur le lac',
+    address: '12 Rue du Lac, Annecy',
+    rating: 4.5,
+    reviewCount: 124,
+    priceLevel: 3,
+    image: '/images/placeholder.jpg',
+  },
+  {
+    id: '2',
+    name: 'Hôtel du Palais',
+    category: 'accommodation',
+    description: 'Hôtel 4 étoiles au cœur de la vieille ville',
+    address: '5 Rue Sainte-Claire, Annecy',
+    rating: 4.7,
+    reviewCount: 89,
+    priceLevel: 4,
+    image: '/images/placeholder.jpg',
+  },
+  {
+    id: '3',
+    name: 'Parapente Annecy',
+    category: 'activities',
+    description: 'Découvrez Annecy vue du ciel',
+    address: 'Col de la Forclaz, Annecy',
+    rating: 4.9,
+    reviewCount: 256,
+    priceLevel: 3,
+    image: '/images/placeholder.jpg',
+  },
+];
+---
+
+<Layout title={`${t.nav.explore} - ${t.home.title}`} lang={lang}>
+  <div class="bg-gray-50 min-h-screen">
+    <!-- Page Header -->
+    <div class="bg-white shadow">
+      <div class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold mb-4">{t.nav.explore}</h1>
+        
+        <!-- Search and Filters -->
+        <div class="flex flex-col md:flex-row gap-4 mb-6">
+          <input
+            type="text"
+            placeholder={t.home.searchPlaceholder}
+            class="flex-1 px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500"
+          />
+          <button class="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-md font-semibold transition">
+            Rechercher
+          </button>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="flex flex-wrap gap-2">
+          <button class="px-4 py-2 rounded-full bg-primary-600 text-white font-semibold">
+            {t.filters.all}
+          </button>
+          {Object.entries(t.categories).map(([key, value]) => (
+            <button class="px-4 py-2 rounded-full bg-white border border-gray-300 hover:border-primary-600 hover:text-primary-600 transition">
+              {value}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8">
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- Sidebar Filters -->
+        <aside class="lg:col-span-1">
+          <div class="bg-white rounded-lg shadow-md p-6 sticky top-20">
+            <h3 class="text-lg font-bold mb-4">Filtres</h3>
+            
+            <!-- Price Filter -->
+            <div class="mb-6">
+              <h4 class="font-semibold mb-2">{t.filters.price}</h4>
+              <div class="space-y-2">
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2" />
+                  <span class="text-gray-700">€</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2" />
+                  <span class="text-gray-700">€€</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2" />
+                  <span class="text-gray-700">€€€</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2" />
+                  <span class="text-gray-700">€€€€</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Rating Filter -->
+            <div class="mb-6">
+              <h4 class="font-semibold mb-2">{t.filters.rating}</h4>
+              <div class="space-y-2">
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2" />
+                  <span class="text-gray-700">★★★★★ (5)</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2" />
+                  <span class="text-gray-700">★★★★☆ (4+)</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2" />
+                  <span class="text-gray-700">★★★☆☆ (3+)</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Open Now -->
+            <div class="mb-6">
+              <label class="flex items-center">
+                <input type="checkbox" class="mr-2" />
+                <span class="font-semibold">{t.filters.openNow}</span>
+              </label>
+            </div>
+
+            <button class="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-md transition">
+              Réinitialiser
+            </button>
+          </div>
+        </aside>
+
+        <!-- Results -->
+        <div class="lg:col-span-3">
+          <div class="mb-4 text-gray-600">
+            <span class="font-semibold">{mockPlaces.length}</span> résultats trouvés
+          </div>
+
+          <div class="space-y-6">
+            {mockPlaces.map((place) => (
+              <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+                <div class="md:flex">
+                  <div class="md:w-64 h-48 bg-gradient-to-r from-primary-400 to-primary-600"></div>
+                  <div class="p-6 flex-1">
+                    <div class="flex items-start justify-between mb-2">
+                      <div>
+                        <div class="flex items-center mb-2">
+                          <span class="text-sm text-gray-500 capitalize">{place.category}</span>
+                          <span class="mx-2 text-gray-300">•</span>
+                          <span class="text-sm text-gray-500">
+                            {'€'.repeat(place.priceLevel)}
+                          </span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">{place.name}</h3>
+                      </div>
+                      <div class="flex items-center bg-yellow-50 px-3 py-1 rounded-full">
+                        <span class="text-yellow-500 text-lg">★</span>
+                        <span class="ml-1 font-bold">{place.rating}</span>
+                        <span class="ml-1 text-sm text-gray-500">({place.reviewCount})</span>
+                      </div>
+                    </div>
+                    
+                    <p class="text-gray-600 mb-3">{place.description}</p>
+                    
+                    <div class="flex items-center text-gray-500 mb-4">
+                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <span class="text-sm">{place.address}</span>
+                    </div>
+
+                    <div class="flex gap-3">
+                      <a 
+                        href={`/place/${place.id}`}
+                        class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded-md font-semibold transition"
+                      >
+                        Voir les détails
+                      </a>
+                      <button class="border-2 border-gray-300 hover:border-primary-600 text-gray-700 hover:text-primary-600 px-6 py-2 rounded-md font-semibold transition">
+                        ♥ Favoris
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- Pagination -->
+          <div class="mt-8 flex justify-center">
+            <nav class="flex gap-2">
+              <button class="px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-100 transition">
+                Précédent
+              </button>
+              <button class="px-4 py-2 rounded-md bg-primary-600 text-white">1</button>
+              <button class="px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-100 transition">2</button>
+              <button class="px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-100 transition">3</button>
+              <button class="px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-100 transition">
+                Suivant
+              </button>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
