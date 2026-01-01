@@ -1,0 +1,101 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Annecy Guide - Your comprehensive guide to Annecy' } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen bg-gray-50">
+    <header class="bg-white shadow-sm">
+      <nav class="container mx-auto px-4 py-4">
+        <div class="flex items-center justify-between">
+          <a href={`/${lang}`} class="text-2xl font-bold text-blue-600">
+            Annecy Guide
+          </a>
+          
+          <div class="hidden md:flex space-x-6">
+            <a href={`/${lang}/locations`} class="hover:text-blue-600">{t('nav.locations')}</a>
+            <a href={`/${lang}/events`} class="hover:text-blue-600">{t('nav.events')}</a>
+            <a href={`/${lang}/hiking`} class="hover:text-blue-600">{t('nav.hiking')}</a>
+            <a href={`/${lang}/magazine`} class="hover:text-blue-600">{t('nav.magazine')}</a>
+            <a href={`/${lang}/classifieds`} class="hover:text-blue-600">{t('nav.classifieds')}</a>
+            <a href={`/${lang}/community`} class="hover:text-blue-600">{t('nav.community')}</a>
+            <a href={`/${lang}/pro`} class="hover:text-blue-600">{t('nav.pro')}</a>
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <select class="border rounded px-2 py-1" onchange="window.location.href = this.value">
+              <option value="/fr" selected={lang === 'fr'}>🇫🇷 FR</option>
+              <option value="/en" selected={lang === 'en'}>🇬🇧 EN</option>
+              <option value="/es" selected={lang === 'es'}>🇪🇸 ES</option>
+              <option value="/de" selected={lang === 'de'}>🇩🇪 DE</option>
+              <option value="/ar" selected={lang === 'ar'}>🇸🇦 AR</option>
+              <option value="/zh" selected={lang === 'zh'}>🇨🇳 ZH</option>
+            </select>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+      <slot />
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-16">
+      <div class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 class="font-bold mb-4">{t('nav.locations')}</h3>
+            <ul class="space-y-2">
+              <li><a href={`/${lang}/locations/restaurants`}>{t('locations.restaurants')}</a></li>
+              <li><a href={`/${lang}/locations/hotels`}>{t('locations.hotels')}</a></li>
+              <li><a href={`/${lang}/locations/activities`}>{t('locations.activities')}</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold mb-4">{t('nav.events')}</h3>
+            <ul class="space-y-2">
+              <li><a href={`/${lang}/events`}>{t('events.all')}</a></li>
+              <li><a href={`/${lang}/events/festivals`}>{t('events.festivals')}</a></li>
+              <li><a href={`/${lang}/events/live`}>{t('events.live')}</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold mb-4">{t('nav.community')}</h3>
+            <ul class="space-y-2">
+              <li><a href={`/${lang}/community/forums`}>{t('community.forums')}</a></li>
+              <li><a href={`/${lang}/community/groups`}>{t('community.groups')}</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold mb-4">{t('user.profile')}</h3>
+            <ul class="space-y-2">
+              <li><a href={`/${lang}/profile`}>{t('user.profile')}</a></li>
+              <li><a href={`/${lang}/favorites`}>{t('user.favorites')}</a></li>
+              <li><a href={`/${lang}/gdpr`}>{t('user.gdpr')}</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm">
+          <p>&copy; 2026 Annecy Guide. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
