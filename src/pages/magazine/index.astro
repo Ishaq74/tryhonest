@@ -1,0 +1,70 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={t('nav.magazine')}>
+  <div class="space-y-6">
+    <h1 class="text-4xl font-bold">{t('nav.magazine')}</h1>
+    <p class="text-xl text-gray-600">Articles and stories about Annecy</p>
+
+    <!-- Featured Article -->
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+      <div class="h-96 bg-gradient-to-br from-blue-500 to-purple-600"></div>
+      <div class="p-6">
+        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Featured</span>
+        <h2 class="text-3xl font-bold mt-4 mb-2">Featured Article Title</h2>
+        <p class="text-gray-600 mb-4">
+          Discover the hidden gems of Annecy through our featured article...
+        </p>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4 text-sm text-gray-500">
+            <span>👤 Author Name</span>
+            <span>📅 Jan 1, 2026</span>
+            <span>👁️ 1.2K views</span>
+          </div>
+          <button class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+            Read More
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Article Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {[1, 2, 3, 4, 5, 6].map((i) => (
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <div class="h-48 bg-gradient-to-br from-green-400 to-blue-500"></div>
+          <div class="p-4">
+            <span class="px-2 py-1 bg-purple-100 text-purple-800 rounded text-sm">
+              Category {i}
+            </span>
+            <h3 class="text-xl font-bold mt-2 mb-2">Article Title {i}</h3>
+            <p class="text-gray-600 mb-4">
+              Brief excerpt of the article content goes here...
+            </p>
+            <div class="flex items-center justify-between text-sm text-gray-500">
+              <span>👁️ {i * 100} views</span>
+              <button class="text-blue-600 hover:underline">Read More</button>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Article Categories -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-bold mb-4">Categories</h2>
+      <div class="flex flex-wrap gap-2">
+        {['Travel', 'Food', 'Culture', 'Nature', 'Events', 'History', 'Tips'].map((cat) => (
+          <button class="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">
+            {cat}
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>

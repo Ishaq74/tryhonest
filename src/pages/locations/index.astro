@@ -1,0 +1,109 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// In a real app, this would fetch from database
+const filters = {
+  pmr: false,
+  online: false,
+  parking: false,
+  wifi: false,
+  languages: [] as string[],
+};
+---
+
+<Layout title={t('nav.locations')}>
+  <div class="space-y-6">
+    <h1 class="text-4xl font-bold">{t('nav.locations')}</h1>
+
+    <!-- Filters Panel -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-bold mb-4">Filters</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" class="rounded" />
+          <span>{t('filters.pmr')}</span>
+        </label>
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" class="rounded" />
+          <span>{t('filters.online')}</span>
+        </label>
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" class="rounded" />
+          <span>{t('filters.parking')}</span>
+        </label>
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" class="rounded" />
+          <span>{t('filters.wifi')}</span>
+        </label>
+        <select class="border rounded px-2 py-1">
+          <option>{t('filters.languages')}</option>
+          <option>Français</option>
+          <option>English</option>
+          <option>Español</option>
+        </select>
+        <select class="border rounded px-2 py-1">
+          <option>{t('filters.hours')}</option>
+          <option>Open Now</option>
+          <option>24/7</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Location Types -->
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <a href={`/${lang}/locations/restaurants`} class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+        <h3 class="text-xl font-bold">{t('locations.restaurants')}</h3>
+        <p class="text-gray-600">Discover local restaurants</p>
+      </a>
+      <a href={`/${lang}/locations/hotels`} class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+        <h3 class="text-xl font-bold">{t('locations.hotels')}</h3>
+        <p class="text-gray-600">Find hotels for your stay</p>
+      </a>
+      <a href={`/${lang}/locations/bnb`} class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+        <h3 class="text-xl font-bold">{t('locations.bnb')}</h3>
+        <p class="text-gray-600">Cozy bed & breakfast options</p>
+      </a>
+      <a href={`/${lang}/locations/gites`} class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+        <h3 class="text-xl font-bold">{t('locations.gites')}</h3>
+        <p class="text-gray-600">Gîtes for longer stays</p>
+      </a>
+      <a href={`/${lang}/locations/activities`} class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+        <h3 class="text-xl font-bold">{t('locations.activities')}</h3>
+        <p class="text-gray-600">Things to do in Annecy</p>
+      </a>
+      <a href={`/${lang}/locations/shops`} class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+        <h3 class="text-xl font-bold">{t('locations.shops')}</h3>
+        <p class="text-gray-600">Local shops and boutiques</p>
+      </a>
+    </div>
+
+    <!-- Sample Locations List -->
+    <div class="space-y-4">
+      <h2 class="text-2xl font-bold">Featured Locations</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {[1, 2, 3].map((i) => (
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="h-48 bg-gray-200"></div>
+            <div class="p-4">
+              <h3 class="text-xl font-bold mb-2">Sample Location {i}</h3>
+              <p class="text-gray-600 mb-4">Sample description for location</p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm">♿ PMR</span>
+                <span class="px-2 py-1 bg-green-100 text-green-800 rounded text-sm">📶 WiFi</span>
+                <span class="px-2 py-1 bg-purple-100 text-purple-800 rounded text-sm">🅿️ Parking</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-yellow-500">★★★★☆</span>
+                <button class="text-blue-600 hover:underline">View Details</button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>

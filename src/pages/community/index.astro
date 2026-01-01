@@ -1,0 +1,97 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={t('nav.community')}>
+  <div class="space-y-6">
+    <h1 class="text-4xl font-bold">{t('nav.community')}</h1>
+
+    <!-- Community Sections -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <a href={`/${lang}/community/forums`} class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+        <h2 class="text-2xl font-bold mb-2">{t('community.forums')}</h2>
+        <p class="text-gray-600 mb-4">Discuss topics with the community</p>
+        <p class="text-3xl font-bold text-blue-600">142</p>
+        <p class="text-sm text-gray-500">Active Topics</p>
+      </a>
+
+      <a href={`/${lang}/community/groups`} class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+        <h2 class="text-2xl font-bold mb-2">{t('community.groups')}</h2>
+        <p class="text-gray-600 mb-4">Join interest-based groups</p>
+        <p class="text-3xl font-bold text-green-600">38</p>
+        <p class="text-sm text-gray-500">Active Groups</p>
+      </a>
+
+      <a href={`/${lang}/community/messages`} class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+        <h2 class="text-2xl font-bold mb-2">{t('community.messages')}</h2>
+        <p class="text-gray-600 mb-4">Private messaging</p>
+        <p class="text-3xl font-bold text-purple-600">5</p>
+        <p class="text-sm text-gray-500">Unread Messages</p>
+      </a>
+    </div>
+
+    <!-- Recent Forum Topics -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-bold mb-4">Recent Forum Topics</h2>
+      <div class="space-y-4">
+        {[1, 2, 3, 4, 5].map((i) => (
+          <div class="border-b pb-4">
+            <div class="flex justify-between items-start">
+              <div>
+                <h3 class="font-bold text-lg">Forum Topic {i}</h3>
+                <p class="text-gray-600">Sample discussion topic content...</p>
+                <div class="flex space-x-4 text-sm text-gray-500 mt-2">
+                  <span>👤 User {i}</span>
+                  <span>💬 {i * 5} replies</span>
+                  <span>👁️ {i * 50} views</span>
+                  <span>{i === 1 && <span class="text-green-600">✓ Verified</span>}</span>
+                </div>
+              </div>
+              <span class="text-sm text-gray-500">2h ago</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Active Groups -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-bold mb-4">Popular Groups</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {[1, 2, 3, 4, 5, 6].map((i) => (
+          <div class="border rounded-lg p-4">
+            <div class="flex items-center space-x-3 mb-2">
+              <div class="w-12 h-12 bg-blue-500 rounded-full"></div>
+              <div>
+                <h3 class="font-bold">Group {i}</h3>
+                <p class="text-sm text-gray-600">{i * 50} members</p>
+              </div>
+            </div>
+            <p class="text-gray-600 text-sm mb-2">Group description...</p>
+            <button class="w-full bg-blue-600 text-white py-1 rounded text-sm hover:bg-blue-700">
+              Join Group
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- User Profiles -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-bold mb-4">Verified Members</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        {[1, 2, 3, 4, 5, 6].map((i) => (
+          <div class="text-center">
+            <div class="w-20 h-20 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full mx-auto mb-2"></div>
+            <p class="font-bold">User {i}</p>
+            <p class="text-xs text-green-600">✓ Verified</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>

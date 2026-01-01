@@ -1,0 +1,135 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={t('moderation.dashboard')}>
+  <div class="space-y-6">
+    <h1 class="text-4xl font-bold">{t('moderation.dashboard')}</h1>
+    <p class="text-xl text-gray-600">Manage and moderate user-generated content</p>
+
+    <!-- Moderation Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-lg font-bold mb-2">Pending</h3>
+        <p class="text-3xl font-bold text-yellow-600">24</p>
+        <p class="text-gray-600">Awaiting Review</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-lg font-bold mb-2">Approved Today</h3>
+        <p class="text-3xl font-bold text-green-600">56</p>
+        <p class="text-gray-600">Submissions</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-lg font-bold mb-2">Rejected</h3>
+        <p class="text-3xl font-bold text-red-600">8</p>
+        <p class="text-gray-600">This Week</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-lg font-bold mb-2">Flagged</h3>
+        <p class="text-3xl font-bold text-orange-600">12</p>
+        <p class="text-gray-600">Content Reports</p>
+      </div>
+    </div>
+
+    <!-- Pending Submissions -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-bold mb-4">{t('moderation.submissions')}</h2>
+      <div class="space-y-4">
+        {[
+          { type: 'location', title: 'New Restaurant - Le Gourmet', user: 'User123' },
+          { type: 'event', title: 'Summer Festival 2026', user: 'EventOrg' },
+          { type: 'article', title: 'Top 10 Places to Visit', user: 'Writer42' },
+          { type: 'trail', title: 'Mountain Hiking Trail', user: 'Hiker99' },
+        ].map((item, i) => (
+          <div class="border rounded-lg p-4">
+            <div class="flex justify-between items-start">
+              <div class="flex-1">
+                <div class="flex items-center space-x-2 mb-2">
+                  <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm">{item.type}</span>
+                  <span class="text-gray-600">by {item.user}</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">{item.title}</h3>
+                <p class="text-gray-600">Submitted 2 hours ago</p>
+              </div>
+              <div class="flex space-x-2">
+                <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                  Approve
+                </button>
+                <button class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                  Reject
+                </button>
+                <button class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">
+                  Review
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Flagged Content -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-bold mb-4">Flagged Content</h2>
+      <div class="space-y-4">
+        {[1, 2, 3].map((i) => (
+          <div class="border border-orange-200 rounded-lg p-4 bg-orange-50">
+            <div class="flex justify-between items-start">
+              <div class="flex-1">
+                <div class="flex items-center space-x-2 mb-2">
+                  <span class="px-2 py-1 bg-orange-200 text-orange-800 rounded text-sm">⚠️ Flagged</span>
+                  <span class="text-gray-600">3 reports</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Reported Content {i}</h3>
+                <p class="text-gray-600">Reason: Inappropriate content</p>
+              </div>
+              <div class="flex space-x-2">
+                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                  Investigate
+                </button>
+                <button class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                  Remove
+                </button>
+                <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                  Dismiss
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Moderation Actions Log -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-bold mb-4">Recent Actions</h2>
+      <div class="space-y-2">
+        {[
+          { action: 'Approved', item: 'Restaurant submission', moderator: 'Mod1', time: '5 min ago' },
+          { action: 'Rejected', item: 'Event submission', moderator: 'Mod2', time: '15 min ago' },
+          { action: 'Flagged', item: 'Forum post', moderator: 'Mod1', time: '30 min ago' },
+          { action: 'Approved', item: 'Article', moderator: 'Mod3', time: '1 hour ago' },
+        ].map((log) => (
+          <div class="flex justify-between items-center border-b pb-2">
+            <div class="flex items-center space-x-4">
+              <span class={`px-2 py-1 rounded text-sm ${
+                log.action === 'Approved' ? 'bg-green-100 text-green-800' :
+                log.action === 'Rejected' ? 'bg-red-100 text-red-800' :
+                'bg-orange-100 text-orange-800'
+              }`}>
+                {log.action}
+              </span>
+              <span>{log.item}</span>
+              <span class="text-gray-600">by {log.moderator}</span>
+            </div>
+            <span class="text-sm text-gray-500">{log.time}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>

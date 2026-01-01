@@ -1,0 +1,81 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={t('nav.pro')}>
+  <div class="space-y-6">
+    <h1 class="text-4xl font-bold">{t('nav.pro')}</h1>
+    <p class="text-xl text-gray-600">Professional Space for Business Management</p>
+
+    <!-- Dashboard Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-lg font-bold mb-2">{t('pro.dashboard')}</h3>
+        <p class="text-3xl font-bold text-blue-600">42</p>
+        <p class="text-gray-600">Active Locations</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-lg font-bold mb-2">{t('pro.bookings')}</h3>
+        <p class="text-3xl font-bold text-green-600">156</p>
+        <p class="text-gray-600">Total Bookings</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-lg font-bold mb-2">{t('pro.analytics')}</h3>
+        <p class="text-3xl font-bold text-purple-600">2.4K</p>
+        <p class="text-gray-600">Monthly Views</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-lg font-bold mb-2">{t('pro.ads')}</h3>
+        <p class="text-3xl font-bold text-orange-600">8</p>
+        <p class="text-gray-600">Active Campaigns</p>
+      </div>
+    </div>
+
+    <!-- Pro Features -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-4">{t('pro.locations')}</h2>
+        <p class="text-gray-600 mb-4">Manage your business locations, update information, and track performance.</p>
+        <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+          Manage Locations
+        </button>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-4">E-commerce</h2>
+        <p class="text-gray-600 mb-4">Sell products and services directly through your listings.</p>
+        <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+          Setup Shop
+        </button>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-4">{t('pro.bookings')}</h2>
+        <p class="text-gray-600 mb-4">Manage reservations and bookings from customers.</p>
+        <button class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
+          View Bookings
+        </button>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-4">{t('pro.analytics')}</h2>
+        <p class="text-gray-600 mb-4">Track views, clicks, and conversions for your listings.</p>
+        <button class="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">
+          View Analytics
+        </button>
+      </div>
+    </div>
+
+    <!-- Analytics Chart -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-bold mb-4">Performance Analytics</h2>
+      <div class="h-64 bg-gray-100 rounded flex items-center justify-center">
+        <p class="text-gray-500">Analytics charts would be displayed here</p>
+      </div>
+    </div>
+  </div>
+</Layout>
